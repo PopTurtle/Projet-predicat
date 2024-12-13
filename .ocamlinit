@@ -1,0 +1,18 @@
+open Proposition
+open Formule
+open FromString
+open Test
+
+open DedNatTest
+
+open IsoCurryHoward
+
+open Predicats.Formule_Syllogisme
+open Predicats.DiagVenn
+open Predicats.Test_diag
+open Predicats.Enumerable
+open Predicats.Formule
+open Predicats.Test
+
+let a = Imp(Ou(Et(Atome "a", Atome "b"), Atome "c"), Non(Atome "d"));;
+let f = Option.get (form_from_string "a * b + c -> ~ d");;
