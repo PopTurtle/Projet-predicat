@@ -14,6 +14,7 @@ module Diag = Map.Make (Predicate_set)
 type diagramme = fill Diag.t
 (** Type des diagrammes de Venn *)
 
+(** Diagramme de test *)
 let d1 : diagramme =
   Diag.of_list
     [
@@ -76,6 +77,25 @@ let conj_diag (d1 : diagramme) (d2 : diagramme) : diagramme option =
           | None -> Some (Diag.add k v d)
           | Some v' -> if v = v' then Some d else None))
     d2 (Some d1)
+
+(** A SUPPRIMER : Dans les tps cette fonction a été rajoutée.... on l'avait refaite pour les tests mais en mieux*)
+(** let conj_diag_list (ds1 : diagramme list) (ds2 : diagramme list) : diagramme list *)
+
+(** Realise toutes les combinaisons possibles à partir des listes de diagrammes *)
+let combinaison_of_diag (dss : diagramme list list) : diagramme list =
+  match dss with
+  | [] -> []
+  | t :: q ->
+      List.fold_left
+        (fun acc d ->
+          let ds =
+            List.map
+              (fun d' -> List.filter_map (fun d'' -> conj_diag d' d'') d)
+              acc
+          in
+
+          List.sort_uniq compare (List.concat ds))
+        t q
 
 (** est_compatible_diag_diag dp dc : teste si le diagramme dp d'une prémisse est compatible
     avec le diagramme dc d'une conclusion *)

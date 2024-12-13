@@ -26,21 +26,6 @@ let p10 = [ p1; p2; p3 ]
 
 let c10 = c1
 
-let combinaison_of_diag (dss : diagramme list list) : diagramme list =
-  match dss with
-  | [] -> []
-  | t :: q ->
-      List.fold_left
-        (fun acc d ->
-          let ds =
-            List.map
-              (fun d' -> List.filter_map (fun d'' -> conj_diag d' d'') d)
-              acc
-          in
-
-          List.sort_uniq compare (List.concat ds))
-        t q
-
 (** test premisses conclusion : teste si chacun des diagrammes de la combinaison
     de la liste prémisses est compatible avec au moins un des diagrammes de conclusion,
     tout en traçant les calculs réalisés et les diagrammes calculés,

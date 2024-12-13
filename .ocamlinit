@@ -7,12 +7,14 @@ open DedNatTest
 
 open IsoCurryHoward
 
+open Predicats
 open Predicats.Formule_Syllogisme
 open Predicats.DiagVenn
 open Predicats.Test_diag
 open Predicats.Enumerable
 open Predicats.Formule
 open Predicats.Test
+open Predicats.DiagToInterpretation
 
 let a = Imp(Ou(Et(Atome "a", Atome "b"), Atome "c"), Non(Atome "d"));;
 let f = Option.get (form_from_string "a * b + c -> ~ d");;

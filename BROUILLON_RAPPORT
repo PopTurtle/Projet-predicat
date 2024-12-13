@@ -1,0 +1,18 @@
+- 2 Commentaires à supprimer dans le code
+-> 1 ContreEx.ml
+-> 1 DiagVenn.ml
+
+y a trop de fichiers dans proposition faudra en supprimer (aussi dans predicats en fait)
+mon format on save fonctionne pas si t'as une idée de pourquoi hésite pas je commence à devenir fou
+
+
+.ocamlinit est peut etre a refaire. Je sais pas pourquoi Predicats.DiagToInterpretation veut pas s'ouvrir
+
+
+Question 1 : bah fréro lis le code c'est littéralement ça.
+-> On recherche une zone de c qui n'est pas égale à celle de d:
+-> La zone dans c est Vide (resp NonVide) et d est NonVide (resp Vide) alors on ne fait rien
+-> La zone dans c est Vide et d n'a pas de contrainte, on ajoute une contrainte NonVide dans d dans la zone correspondante
+-> La zone dans c est NonVide et n'a pas de contrainte alors on ne fait rien
+
+Question 2 : MAIS FRERO C'EST VRAIMENT LE CODE FAUT JUSTE LE LIRE
