@@ -35,3 +35,26 @@ let atomes_syllogisme (fs : formule_syllogisme) : string list =
 let atomes_syllo_list (fs : formule_syllogisme list) : string list =
   let atomes = List.map atomes_syllogisme fs in
   List.sort_uniq String.compare (List.concat atomes)
+
+type 'a interpretation = string -> 'a -> bool
+(** Fonction d'interprétation des prédicats, ici nullaires pour les syllogismes *)
+
+(** Évalue à l'aide d'une interprétation i la partie non quantifiée d'un syllogisme,
+      au point v du domaine d'interprétation *)
+let rec eval_preds_with (i : 'a interpretation) (v : 'a) : formule -> bool =
+  function
+  | Top -> true
+  | Bot -> false
+  | Atome s -> i s v
+  | Non f -> not (eval_preds_with i v f)
+  | Et (f1, f2) -> eval_preds_with i v f1 && eval_preds_with i v f2
+  | Ou (f1, f2) -> eval_preds_with i v f1 || eval_preds_with i v f2
+  | Imp (f1, f2) -> eval_preds_with i v f1 <= eval_preds_with i v f2
+
+(** Foncteur construisant la fonction d'évaluation d'un syllogisme sur des types énumérables *)
+module MakeEval (M : Enumerable.Enumerable) = struct
+  let eval_syllogisme (i : M.t interpretation) : formule_syllogisme -> bool =
+    function
+    | IlExiste f -> Seq.exists (fun v -> eval_preds_with i v f) M.values
+    | PourTout f -> Seq.for_all (fun v -> eval_preds_with i v f) M.values
+end

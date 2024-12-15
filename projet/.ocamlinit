@@ -1,0 +1,5 @@
+open Predicats.ContreEx;;
+open Predicats.DiagToInterpretation;;
+open Predicats.Enumerable;;
+open Predicats.Formule_Syllogisme;;
+open Predicats.Validation;;

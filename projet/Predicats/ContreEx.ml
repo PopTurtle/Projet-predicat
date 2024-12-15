@@ -3,17 +3,19 @@ open DiagToInterpretation
 open Formule_Syllogisme
 
 (** Si le diagramme d n'est pas compatible avec c, cherche une contrainte "cont" de c incompatible avec d, puis :
-- si cont est une contrainte de non vacuité, renvoie d
-- si cont est une contrainte de vacuité, ajoute une contrainte de non vacuité dans d pour la même zone
-Sinon, renvoie d
-*)
+      - si cont est une contrainte de non vacuité, renvoie d
+      - si cont est une contrainte de vacuité, ajoute une contrainte de non vacuité dans d pour la même zone
+    Sinon, renvoie d  *)
 let extend_contre_ex (d : diagramme) (c : diagramme) : diagramme =
-  let search k = match Diag.find_opt k d with None -> true | Some v -> (
-    if v = (Diag.find k c) then false else true
-  ) in
-  let cont = Diag.find_first_opt search c in match cont with None -> d | Some (k, v) -> (
-    if v = NonVide then d else Diag.add k NonVide d
-  ) (** A REFORMATER PARCE QUE LE FORMAT ON SAVE NE FONCTIONNE PAS JSP POURQUOI A LAIDE -------------------------------------------------------------------- *)
+  let search (k : Predicate_set.t) : bool =
+    match Diag.find_opt k d with
+    | None -> true
+    | Some v -> if v = Diag.find k c then false else true
+  in
+  match Diag.find_first_opt search c with
+  | None -> d
+  | Some (_, v) when v = NonVide -> d
+  | Some (k, _) -> Diag.add k NonVide d
 
 (** atomes_from_form_syll f : renvoie la liste des atomes de la formule f *)
 let atomes_from_form_syll : formule_syllogisme -> string list = function

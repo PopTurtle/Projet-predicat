@@ -79,6 +79,7 @@ let conj_diag (d1 : diagramme) (d2 : diagramme) : diagramme option =
     d2 (Some d1)
 
 (** A SUPPRIMER : Dans les tps cette fonction a été rajoutée.... on l'avait refaite pour les tests mais en mieux*)
+
 (** let conj_diag_list (ds1 : diagramme list) (ds2 : diagramme list) : diagramme list *)
 
 (** Realise toutes les combinaisons possibles à partir des listes de diagrammes *)
