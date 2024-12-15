@@ -86,14 +86,14 @@ let enum_from_int (n : int) =
   end : EnumerableFromInt)
 
 (** enum_between_int n1 n2 : renvoie un module de type EnumerableInt représentant les entiers entre n1 et n2 *)
-let enum_between_int (_ : int) (_ : int) =
+let enum_between_int (n1 : int) (n2 : int) =
   (module struct
     type t = int
 
-    let values = failwith "à faire"
-    let mini = failwith "à faire"
-    let maxi = failwith "à faire"
-    let safe_succ _ = failwith "à faire"
-    let from_int _ = failwith "à faire"
-    let to_int _ = failwith "à faire"
+    let values = from_succ (fun x -> if x >= n2 then None else Some (x + 1)) n1
+    let mini = Some n1
+    let maxi = Some n2
+    let safe_succ x = if x >= n1 && x < n2 then Some (x + 1) else None
+    let from_int x = if x >= n1 && x <= n2 then Some x else None
+    let to_int x = x
   end : EnumerableFromInt)
