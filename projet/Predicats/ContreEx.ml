@@ -2,9 +2,9 @@ open DiagVenn
 open DiagToInterpretation
 open Formule_Syllogisme
 
-(** Si le diagramme d n'est pas compatible avec c, cherche une contrainte "cont" de c incompatible avec d, puis :
-      - si cont est une contrainte de non vacuité, renvoie d
-      - si cont est une contrainte de vacuité, ajoute une contrainte de non vacuité dans d pour la même zone
+(** Si le diagramme d n'est pas compatible avec c, cherche une contrainte de c incompatible avec d, puis :
+      - si c'est une contrainte de non vacuité, renvoie d
+      - si c'est une contrainte de vacuité, ajoute une contrainte de non vacuité dans d pour la même zone
     Sinon, renvoie d  *)
 let extend_contre_ex (d : diagramme) (c : diagramme) : diagramme =
   let search (k : Predicate_set.t) : bool =
