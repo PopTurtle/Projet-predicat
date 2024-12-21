@@ -32,20 +32,22 @@ let ens_add_int (e : string) (n : int) (p : predicate_def) : predicate_def =
 (** Renvoie une association predicat -> ensemble d'entiers représentant le diagramme, 
       avec l'entier maximum utilisé, s'il existe *)
 let diag_to_predicate_def (d : diagramme) : int option * predicate_def =
-  let p, m =
+  let p, max =
     Diag.fold
       (fun (ensset : Predicate_set.t) (f : fill) (acc : predicate_def * int) ->
         match f with
         | Vide -> acc
         | _ ->
-            ( Predicate_set.fold
-                (fun str acc' -> ens_add_int str (snd acc + 1) acc')
-                ensset (fst acc),
-              snd acc + 1 ))
+            let new_max = snd acc + 1 in
+            let map =
+              Predicate_set.fold
+                (fun str acc' -> ens_add_int str new_max acc')
+                ensset (fst acc)
+            in
+            (map, new_max))
       d (Predicate_def.empty, -1)
   in
-
-  ((if m < 0 then None else Some m), p)
+  ((if max < 0 then None else Some max), p)
 
 let d1_p : diagramme =
   Diag.of_list
