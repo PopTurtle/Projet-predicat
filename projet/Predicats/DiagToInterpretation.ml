@@ -34,13 +34,14 @@ let ens_add_int (e : string) (n : int) (p : predicate_def) : predicate_def =
 let diag_to_predicate_def (d : diagramme) : int option * predicate_def =
   let p, m =
     Diag.fold
-      (fun ensset fillv acc ->
-        if fillv = Vide then acc
-        else
-          ( Predicate_set.fold
-              (fun str acc' -> ens_add_int str (snd acc + 1) acc')
-              ensset (fst acc),
-            snd acc + 1 ))
+      (fun (ensset : Predicate_set.t) (f : fill) (acc : predicate_def * int) ->
+        match f with
+        | Vide -> acc
+        | _ ->
+            ( Predicate_set.fold
+                (fun str acc' -> ens_add_int str (snd acc + 1) acc')
+                ensset (fst acc),
+              snd acc + 1 ))
       d (Predicate_def.empty, -1)
   in
 
