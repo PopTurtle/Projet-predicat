@@ -78,10 +78,6 @@ let conj_diag (d1 : diagramme) (d2 : diagramme) : diagramme option =
           | Some v' -> if v = v' then Some d else None))
     d2 (Some d1)
 
-(** A SUPPRIMER : Dans les tps cette fonction a été rajoutée.... on l'avait refaite pour les tests mais en mieux*)
-
-(** let conj_diag_list (ds1 : diagramme list) (ds2 : diagramme list) : diagramme list *)
-
 (** Realise toutes les combinaisons possibles à partir des listes de diagrammes *)
 let combinaison_of_diag (dss : diagramme list list) : diagramme list =
   match dss with
