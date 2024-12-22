@@ -48,3 +48,9 @@ let validation_contre_ex (ps : formule_syllogisme list) (c : formule_syllogisme)
       List.for_all (EvalM.eval_syllogisme M.i) ps
       && not (EvalM.eval_syllogisme M.i c))
     (all_contre_ex ps c)
+
+let validation () : unit =
+  let p1 : formule_syllogisme = PourTout (Atome "a") in
+  let p2 : formule_syllogisme = PourTout (Imp (Atome "a", Atome "b")) in
+  let c : formule_syllogisme = IlExiste (Atome "c") in
+  print_endline (string_of_bool (validation_contre_ex [ p1; p2 ] c))
